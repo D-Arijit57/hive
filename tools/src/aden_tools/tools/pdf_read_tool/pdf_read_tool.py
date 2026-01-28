@@ -4,10 +4,11 @@ PDF Read Tool - Parse and extract text from PDF files.
 Uses pypdf to read PDF documents and extract text content
 along with metadata.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, List
+from typing import Any
 
 import os 
 from fastmcp import FastMCP
@@ -18,9 +19,7 @@ DEFAULT_MAX_PDF_SIZE_MB = 20
 def register_tools(mcp: FastMCP) -> None:
     """Register PDF read tools with the MCP server."""
 
-    def parse_page_range(
-        pages: str | None, total_pages: int, max_pages: int
-    ) -> List[int] | dict:
+    def parse_page_range(pages: str | None, total_pages: int, max_pages: int) -> list[int] | dict:
         """
         Parse page range string into list of 0-indexed page numbers.
 
@@ -81,7 +80,8 @@ def register_tools(mcp: FastMCP) -> None:
 
         Args:
             file_path: Path to the PDF file to read (absolute or relative)
-            pages: Page range to extract - 'all'/None for all, '5' for single, '1-10' for range, '1,3,5' for specific
+            pages: Page range - 'all'/None for all, '5' for single,
+                '1-10' for range, '1,3,5' for specific
             max_pages: Maximum number of pages to process (1-1000, memory safety)
             include_metadata: Include PDF metadata (author, title, creation date, etc.)
 
@@ -176,7 +176,9 @@ def register_tools(mcp: FastMCP) -> None:
                     "subject": meta.get("/Subject"),
                     "creator": meta.get("/Creator"),
                     "producer": meta.get("/Producer"),
-                    "created": str(meta.get("/CreationDate")) if meta.get("/CreationDate") else None,
+                    "created": str(meta.get("/CreationDate"))
+                    if meta.get("/CreationDate")
+                    else None,
                     "modified": str(meta.get("/ModDate")) if meta.get("/ModDate") else None,
                 }
 
